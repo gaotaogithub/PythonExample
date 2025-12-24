@@ -16,10 +16,12 @@ from dotenv import load_dotenv
 import os
 
 base = os.path.dirname(__file__)
+print(base) 
 load_dotenv(os.path.join(base, ".env"))
 student_record = os.getenv("STUDENTS_RECORD_FILE")
 
-import pickle
+
+import ast ,pickle
 import logging
 
 # Define logger with info
@@ -30,12 +32,16 @@ import logging
 
 
 def remcount():
-    with open(student_record, "rb") as F:
-        val = pickle.load(F)
+    print(student_record)
+    with open("student_records.pkl","r", encoding="utf-8") as f:
+        txt = f.read().strip()
+        data = ast.literal_eval(txt)  
+    with open(student_record, "wb") as F:
+        pickle.dump(data, F)
         count = 0
         weak_students = []
 
-        for student in val:
+        for student in data:
             if student[2] <= 40:
                 print(f"{student} eligible for remedial")
                 weak_students.append(student)
@@ -60,6 +66,20 @@ def firstmark():
                 print(f"{i}\ncongrats")
                 count += 1
         print("The total number of students who secured top marks are", count)
+
+
+
+def top5marks():
+    with open(student_record, "rb") as F:
+        val = pickle.load(F)
+        main = [i[2] for i in val]
+        main.sort(reverse=True)
+        top5 = main[:5]
+        print("The top 5 marks are", top5)
+        for mark in top5:
+            for i in val:
+                if mark == i[2]:
+                    print(f"{i} secured top 5 marks")
 
 
 remcount()
