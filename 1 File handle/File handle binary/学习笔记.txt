@@ -1,0 +1,9 @@
+1、二进制文件读取
+    将csv\json等文件转换成可读取的pkl文件可以借助
+pandas 方式：读取 CSV 后用 to_pickle 保存为 pkl。示例：
+import pandas as pd
+df = pd.read_csv("input.csv")
+df.to_pickle("output.pkl")
+
+
+python -c "import pandas as pd; pd.read_csv('input.csv').to_pickle('output.pkl')"
