@@ -1,16 +1,20 @@
 # practicing with streams
 import sys
 
-sys.stdout.write("Enter the name of the file")
-file = sys.stdin.readline()
+# 输出提示信息
+sys.stdout.write("Enter the name of the file: ")
+sys.stdout.flush()  # 强制刷新缓冲区，确保提示信息立即显示
+file = sys.stdin.readline().strip()  # 去掉换行符
 
-with open(
-    file.strip(),
-) as F:
-    while True:
-        ch = F.readlines()
-        for i in ch:  # ch is the whole file,for i in ch gives lines, for j in i gives letters,for j in i.split gives words
-            print(i, end="")
-        else:
-            sys.stderr.write("End of file reached")
-            break
+try:
+    with open(file, "r") as F:
+        while True:
+            line = F.readline()  # 一次读取一行，避免内存占用过高
+            if not line:  # 文件结束时退出循环
+                sys.stderr.write("End of file reached\n")
+                break
+            sys.stdout.write(line)  # 输出每一行内容
+except FileNotFoundError:
+    sys.stderr.write(f"Error: File '{file}' not found.\n")
+except Exception as e:
+    sys.stderr.write(f"An error occurred: {e}\n")
