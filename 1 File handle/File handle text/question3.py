@@ -32,6 +32,7 @@ def check_first_letter():
 
         # store all starting letters from each line in one string after converting to lower case
         first_letters = "".join([line[0].lower() for line in lines])
+        print(first_letters)
 
         count_i = first_letters.count("i")
         count_m = first_letters.count("m")
@@ -45,3 +46,8 @@ if __name__ == "__main__":
     write_to_file(file_name)
     time.sleep(1)
     check_first_letter()
+
+
+#F.read() will read the entire file content as a single string
+#F.readlines() will read the file content line by line and return a list of strings
+#each string in the list represents a line from the file
